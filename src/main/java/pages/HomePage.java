@@ -298,12 +298,14 @@ public class HomePage {
     // Click on the Download app Btn
     public boolean isScanToDownLoadAppear() {
         SeleniumActions.clickOnElement(downloadAppBtn);
+        Waiters.waitForVisibility(scanPopUp);
         return scanPopUp.isDisplayed();
     }
 
     // Check support pop up opened
     public boolean isSupportPopUpAppear() {
         SeleniumActions.clickOnElement(supportBtn);
+        Waiters.waitForVisibility(scanPopUp);
         return supportPopUp.isDisplayed();
     }
 
@@ -311,6 +313,7 @@ public class HomePage {
     public boolean isUserRedirectTermsPage () {
         js.executeScript("arguments[0].scrollIntoView();",footerTermsAndConditionsBtn);
         SeleniumActions.clickOnElement(footerTermsAndConditionsBtn);
+        Waiters.waitForVisibility(termsText);
         return termsText.isDisplayed();
     }
 
@@ -318,6 +321,7 @@ public class HomePage {
     public boolean isUserRedirectsWhyHiHubPage(){
         js.executeScript("arguments[0].scrollIntoView();",footerWhyHiHubBtn);
         SeleniumActions.clickOnElement(footerWhyHiHubBtn);
+        Waiters.waitForVisibility(whyHiHUbPage);
         return whyHiHUbPage.isDisplayed();
     }
 
@@ -325,6 +329,7 @@ public class HomePage {
     public boolean isUserRedirectsAboutUsPage() {
         js.executeScript("arguments[0].scrollIntoView();",footerAboutUsBtn);
         SeleniumActions.clickOnElement(footerAboutUsBtn);
+        Waiters.waitForVisibility(aboutUsPage);
         return aboutUsPage.isDisplayed();
     }
 
@@ -338,6 +343,7 @@ public class HomePage {
     // Check contact us page
     public boolean isUserRedirectsContactUsPage() {
         js.executeScript("arguments[0].scrollIntoView();",footerContactUsBtn);
+        Waiters.waitForVisibility(contactsUsPage);
         SeleniumActions.clickOnElement(footerContactUsBtn);
         return contactsUsPage.isDisplayed();
     }
