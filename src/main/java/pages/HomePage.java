@@ -7,6 +7,8 @@ import utils.DriverFactory;
 import utils.SeleniumActions;
 import utils.Waiters;
 
+import java.util.ArrayList;
+
 public class HomePage {
     public HomePage() {
         PageFactory.initElements(DriverFactory.getDriver(),this);
@@ -15,7 +17,7 @@ public class HomePage {
     JavascriptExecutor js = (JavascriptExecutor) DriverFactory.getDriver();
 
 
-    @FindBy(xpath = "//*[@id=\"header-shop\"]//*[@title=\"Hihub logo\"]")
+    @FindBy(xpath = "//*[@id=\"header-shop\"]//*[@class=\"logo\"]")
     public WebElement headerLogo;
 
     @FindBy(xpath = "//header//*[@class=\"trigger\"]")
@@ -24,8 +26,8 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"__next\"]//*[@class=\"dropdown first-level left show\"]")
     public WebElement productsPopUp;
 
-    @FindBy(xpath = "//*[@id=\"header-shop\"]//nav//ul/li[2]/div[1]/ul/li[3]/a/span")
-    public WebElement drugsCategory;
+    @FindBy(xpath = "(//*[@class=\"subctgry-ctrl\"])[4]")
+    public WebElement vitaminsBtn;
 
     @FindBy(xpath = "//*[@class=\"category-navigation\"]")
     public WebElement categoryNavigation;
@@ -37,7 +39,10 @@ public class HomePage {
     public WebElement headerPromotions;
 
     @FindBy(xpath = "//*[@class=\"react-select__control css-yk16xz-control\"]")
-    private WebElement sortByBtn;
+    public WebElement sortByBtn;
+
+    @FindBy(xpath = "//*[@class=\"chat-body  \"]")
+    public WebElement chatBody;
 
     @FindBy(xpath = "//header//*[@class=\"phone-numbers\"]")
     public WebElement headerPhoneNumbers;
@@ -62,6 +67,15 @@ public class HomePage {
 
     @FindBy(xpath = "//header//*[@class=\"btn outline primary no-shadow min-86 mr-15\"]")
     public WebElement headerSignInBtn;
+
+    @FindBy(xpath = "//*[@name=\"email\"]")
+    public WebElement emailField;
+
+    @FindBy(xpath = "//*[@id=\"password\"]")
+    public WebElement passwordField;
+
+    @FindBy(xpath = "//*[@name=\"Save\"]")
+    public WebElement signInBtn;
 
     @FindBy(xpath = "//header//*[@class=\"btn filled primary no-shadow min-86\"]")
     public WebElement headerSignUpBtn;
@@ -91,11 +105,14 @@ public class HomePage {
     public WebElement searchFilterBar;
 
     @FindBy(xpath = "class=\"filter-box\"")
-    WebElement availabilityFiled;
+    public WebElement availabilityFiled;
 
 
     @FindBy(xpath = "//header//*[@class=\"btn filled size-md radius-md with-icon doctor-call\"]")
     public WebElement chatWithDoctorBtn;
+
+    @FindBy(xpath = "//*[@class=\"doctors-list \"]")
+    public WebElement doctorsList;
 
     @FindBy(xpath = "//header//*[@class=\"btn filled size-md radius-md with-icon apps\"]")
     public WebElement downloadAppBtn;
@@ -155,7 +172,7 @@ public class HomePage {
     // Click on the Category item
 
     public void clickCategoryBtn () {
-        SeleniumActions.clickOnElement(drugsCategory);
+        SeleniumActions.clickOnElement(vitaminsBtn);
     }
 
     // Check if the Subcategories Popup opened
@@ -233,7 +250,7 @@ public class HomePage {
         return headerPhoneNumbers.isEnabled();
     }
 
-    // Click on the Sign In button
+    // Click on the SignIn button
     public void clickSignInBtn() {
         SeleniumActions.clickOnElement(headerSignInBtn);
     }
@@ -343,8 +360,8 @@ public class HomePage {
     // Check contact us page
     public boolean isUserRedirectsContactUsPage() {
         js.executeScript("arguments[0].scrollIntoView();",footerContactUsBtn);
-        Waiters.waitForVisibility(contactsUsPage);
         SeleniumActions.clickOnElement(footerContactUsBtn);
+        Waiters.waitForVisibility(contactsUsPage);
         return contactsUsPage.isDisplayed();
     }
 
@@ -354,4 +371,33 @@ public class HomePage {
         SeleniumActions.clickOnElement(footerSiteMapBtn);
         return DriverFactory.getDriver().getCurrentUrl().contains("sitemap");
     }
+
+    // Check chat with doctor button for unregistered user
+    public boolean isUserRedirectsChatPage() {
+        SeleniumActions.clickOnElement(chatWithDoctorBtn);
+        ArrayList<String> chatTab = new ArrayList<> (DriverFactory.getDriver().getWindowHandles());
+        DriverFactory.getDriver().switchTo().window(chatTab.get(1));
+        Waiters.waitForVisibility(chatBody);
+        return chatBody.isDisplayed();
+    }
+
+    // Check chat with doctor button for registered user
+    public boolean isRegUserRedirectsChatPage() {
+        SeleniumActions.clickOnElement(headerSignInBtn);
+        SeleniumActions.sendKeysOnElement(emailField, "testkjl@mailinator.com");
+        SeleniumActions.sendKeysOnElement(passwordField,"123456");
+        SeleniumActions.clickOnElement(signInBtn);
+        DriverFactory.getDriver().navigate().refresh();
+
+        Waiters.waitUntilClickable(categoryNavigation);
+
+        SeleniumActions.clickOnElement(chatWithDoctorBtn);
+        ArrayList<String> chatTab = new ArrayList<> (DriverFactory.getDriver().getWindowHandles());
+        DriverFactory.getDriver().switchTo().window(chatTab.get(1));
+        Waiters.waitForVisibility(doctorsList);
+        return doctorsList.isDisplayed();
+
+    }
+
+
 }

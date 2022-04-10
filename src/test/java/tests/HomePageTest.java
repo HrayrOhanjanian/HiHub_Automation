@@ -1,10 +1,12 @@
+package tests;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
 
-public class HomePageTest extends BaseTest{
+public class HomePageTest extends BaseTest {
 
 
     @BeforeMethod
@@ -198,6 +200,21 @@ public class HomePageTest extends BaseTest{
     void clickSiteAMpBtn() {
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isUserRedirectsSiteMapPage(), "There is issue when user clicks on the site map Btn ");
+    }
+
+    // Click chat button with unregistered user
+    @Test
+    void clickChatBtn() {
+        HomePage homePage = new HomePage();
+        Assert.assertTrue(homePage.isUserRedirectsChatPage(), "There is issue when unregistered  user clicks on the ");
+    }
+
+    // CLick on the chat Btn with registered user
+    @Test()
+    void clickChatBtnWithRegUser() {
+        HomePage homePage = new HomePage();
+
+        Assert.assertTrue(homePage.isRegUserRedirectsChatPage(), "There is issue when registered user clicks on the chat Btn");
     }
 
 }
