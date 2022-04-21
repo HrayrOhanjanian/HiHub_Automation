@@ -5,7 +5,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
-
 public class HomePageTest extends BaseTest {
 
 
@@ -13,7 +12,6 @@ public class HomePageTest extends BaseTest {
     void openPage() {
         navigateToURI(" ");
     }
-
 
     @Test
     void productsPopUpAppears() {

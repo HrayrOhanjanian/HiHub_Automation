@@ -1,5 +1,6 @@
 package utils;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -26,10 +27,16 @@ public class SeleniumActions {
     public static void sendKeysOnElement(WebElement element, String text) {
         Waiters.waitForVisibility(element);
         getActions().sendKeys(element, text).build().perform();
-
     }
 
+    public static void cleanTextFromElement(WebElement element) {
+        String inputValue = element.getAttribute("value");
+        if(inputValue!= null) {
+            for (int i = 0; i < inputValue.length(); i++) {
+                element.sendKeys(Keys.BACK_SPACE);
 
-
+            }
+        }
+    }
 
 }

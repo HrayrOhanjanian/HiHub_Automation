@@ -84,7 +84,7 @@ public class HomePage {
     WebElement signInPopUp;
 
     @FindBy(xpath = "//*[@class=\"first-step\"]")
-    WebElement signUpPopUp;
+    public WebElement signUpPopUp;
 
     @FindBy(xpath = "//header//*[@class=\"cart-wrapper fly-cart\"]")
     public WebElement headerShoppingCartBtn;
@@ -119,7 +119,6 @@ public class HomePage {
 
     @FindBy (xpath = "//*[@class=\"MuiDialogContent-root jss3\"]")
     public WebElement scanPopUp;
-
 
     @FindBy(xpath = "//*[@class=\"icon-doctor\"]")
     public WebElement supportBtn;
