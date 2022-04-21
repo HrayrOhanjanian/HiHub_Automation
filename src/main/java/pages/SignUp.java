@@ -129,6 +129,9 @@ public class SignUp extends HomePage{
     @FindBy(xpath = "//*[@class=\"icon-user\"]")
     public WebElement profileIcon;
 
+    @FindBy(xpath = "(//*[@class=\"dropdown first-level right show\"]//a)[4]")
+    public WebElement logoutBtn;
+
 
     // Click on the x button in 1 step
     public void clickXBtn() {

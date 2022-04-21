@@ -50,24 +50,24 @@ public class SignUpTest extends HomePageTest{
     }
 
     // Check when user wants to sign in with Facebook
-    @Test
+   /* @Test
     void singInWithFacebook() {
         SignUp signUp = new SignUp();
 
         signUp.clickSignUpBtn();
         signUp.clickFacebookBtn();
         Assert.assertTrue(signUp.isFacebookContentAppear(), "There is issue when user clicks on the Facebook Btn ");
-    }
+    }*/
 
     // Check when user wants to sign in with Google
-    @Test
+   /* @Test
     void signInWithGoogle() {
         SignUp signUp = new SignUp();
 
         signUp.clickSignUpBtn();
         signUp.clickGoogleBtn();
         Assert.assertTrue(signUp.isGoogleContentAppear(), "There is issue when user clicks on the google Btn");
-    }
+    }*/
 
     // Check register 2nd step pass with valid email
     @Test
@@ -302,7 +302,6 @@ public class SignUpTest extends HomePageTest{
         SeleniumActions.sendKeysOnElement(signUp.mailinatorSearch, signUp.emailForSignUp);
         SeleniumActions.clickOnElement(signUp.mailinatorGoBtn);
         SeleniumActions.clickOnElement(signUp.confirmLink);
-        Waiters.waitForVisibility(signUp.confirmationModal);
         DriverFactory.getDriver().switchTo().frame("html_msg_body");
         SeleniumActions.clickOnElement(signUp.confirmRegisterBtn);
         signUp.switchToNewTab();
@@ -311,6 +310,15 @@ public class SignUpTest extends HomePageTest{
         SeleniumActions.sendKeysOnElement(signUp.signInPasswordField, "123456");
         SeleniumActions.clickOnElement(signUp.signInBtn);
         softAssert.assertTrue(signUp.isProfileIconAppear(), "There is issue when user has registered and confirmed link and wants to sign in  ");
+
+        // Check when user want to register with already registered email
+        SeleniumActions.clickOnElement(signUp.profileIcon);
+        SeleniumActions.clickOnElement(signUp.logoutBtn);
+        signUp.redirectPasswordsStep(signUp.emailForSignUp, "David", "23021998");
+        SeleniumActions.sendKeysOnElement(signUp.passwordField, "123456");
+        SeleniumActions.sendKeysOnElement(signUp.confirmPasswordField, "123456");
+        SeleniumActions.clickOnElement(signUp.confirmBtn);
+        softAssert.assertTrue(signUp.isNoConfirmErrorNotificationAppear(), "There is issue when user want to register with already used email");
 
         softAssert.assertAll();
     }
